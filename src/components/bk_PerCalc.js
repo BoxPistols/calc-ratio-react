@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 export const PerCalc = () => {
-  // const [ratio, setRatio] = useState(0);
 
   // 元の容量
   const initVal = 0;

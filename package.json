@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "node": "^17.7.2",
+    "node-sass": "^7.0.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "sass": "^1.50.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -14,5 +17,17 @@
   },
   "devDependencies": {
     "react-scripts": "latest"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
