@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1.85em;
+}
+
+body {
+  margin: 0;
+  font-family: 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 4vh 4vw;
+  color: gray;
+}
+
+section {
+  margin-bottom: 1em;
+}
+
+h1,
+p {
+  font-family: Lato;
+}
+
+h2 {
+  font-size: 1rem;
+  color: teal;
+}
