@@ -1,7 +1,7 @@
 * {
   margin: 0;
   box-sizing: border-box;
-  line-height: 1.85em;
+  line-height: 1.75em;
 }
 
 body {
@@ -23,6 +23,31 @@ p {
 }
 
 h2 {
+  margin: 1em 0 0;
   font-size: 1rem;
   color: teal;
+  font-weight: 600;
+}
+
+h3 {
+
+  font-size: 1.2rem;
+  color: tomato;
+  font-weight: 600;
+}
+
+
+// Util
+.flex {
+  display: flex;
+
+}
+.flex-jc-center {
+  justify-content: center;
+}
+.flex-ai-center {
+  align-items: center;
+}
+.flex-column {
+  flex-direction: column;
 }
