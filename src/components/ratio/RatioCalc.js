@@ -128,10 +128,10 @@ export const RatioCalc = () => {
       <hr />
 
       {/* ２剤のパーセンテージ */}
-      <section>
+      {/* <section>
         <h2>２剤の割合：容量</h2>
         <h3 className="flex">{fractionNumerator ? fractionNumerator : ""}g</h3>
-      </section>
+      </section> */}
       {/* 計算 */}
       <section>
         <h2>最終計算結果</h2>

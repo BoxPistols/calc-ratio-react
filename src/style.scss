@@ -9,7 +9,7 @@ body {
   font-family: "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 4vh 4vw;
+  padding: 2vh 4vw;
   color: dimgray;
   letter-spacing: 1.12px;
 }
@@ -18,9 +18,8 @@ section {
   margin-bottom: 1em;
 }
 
-h1,
-p {
-  font-family: Lato;
+h1 {
+  font-size: 1.1rem;
 }
 
 h2 {
