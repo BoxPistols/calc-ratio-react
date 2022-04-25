@@ -22,7 +22,7 @@ export const RatioCalc = () => {
   const num1 = pVal
   const num2 = parseInt(calc)
   const ratio = (num1 / 100) * num2
-  const total = digitCalc(num1 + ratio)
+  // const total = digitCalc(num1 + ratio)
 
   // 分数 Fractioｎ
   /**
@@ -139,7 +139,7 @@ export const RatioCalc = () => {
           <li>
             <div className="list">
               <div>総容量の再確認：</div>
-              <div className="final num ">{total}g</div>
+              <div className="final num ">{totalFracCalc}g</div>
             </div>
           </li>
           <li>
