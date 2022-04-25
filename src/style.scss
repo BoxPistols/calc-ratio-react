@@ -6,7 +6,7 @@
 
 body {
   margin: 0;
-  font-family: 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 4vh 4vw;
@@ -30,17 +30,40 @@ h2 {
 }
 
 h3 {
-
   font-size: 1.2rem;
   color: tomato;
   font-weight: 600;
 }
 
+hr + section {
+  margin-top: 1em;
+  color: gray;
+}
+
+input {
+  font-size: 1.1em;
+  color: dimgray;
+  padding: 2px 0 2px 0.4em;
+  margin: 2px 4px;
+  max-width: 4em;
+  width: fit-content;
+  outline: none;
+}
+
+button {
+  border-radius: 2em;
+  outline: none;
+  border: 1px solid pink;
+  background-color: pink;
+  margin: 2px 4px;
+  padding: 2px 1em;
+  font-size:1em;
+
+}
 
 // Util
 .flex {
   display: flex;
-
 }
 .flex-jc-center {
   justify-content: center;

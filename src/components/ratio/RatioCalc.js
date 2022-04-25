@@ -1,39 +1,43 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 export const RatioCalc = () => {
   // 小数点
-  const digitNum = 2;
+  const digitNum = 2
   const digitCalcNum = (_v) => {
-    return Math.floor(_v * Math.pow(10, digit)) / Math.pow(10, digit);
-  };
+    return Math.floor(_v * Math.pow(10, digit)) / Math.pow(10, digit)
+  }
 
   // 1剤 元の容量
-  const initVal = 0;
-  const [val, setVal] = useState(initVal);
-  const add = () => setVal(() => parseInt(val) + 1);
-  const remove = () => setVal(() => parseInt(val) - 1);
+  const initVal = 0
+  const [val, setVal] = useState(initVal)
+  const add = () => setVal(() => parseInt(val) + 1)
+  const remove = () => setVal(() => parseInt(val) - 1)
 
   // ２剤 元の容量から比率を計算する
-  const initCalc = 0;
-  const [calc, setCalc] = useState(initCalc);
+  const initCalc = 0
+  const [calc, setCalc] = useState(initCalc)
 
   // 小数点
-  const digit = 1;
+  const digit = 1
   const digitCalc = (_v) => {
-    return Math.floor(_v * Math.pow(10, digit)) / Math.pow(10, digit);
-  };
+    return Math.floor(_v * Math.pow(10, digit)) / Math.pow(10, digit)
+  }
 
-  const num1 = parseInt(val);
-  const num2 = parseInt(calc);
-  const ratio = (num1 / 100) * num2;
-  const total = digitCalc(num1 + ratio);
+  const num1 = parseInt(val)
+  const num2 = parseInt(calc)
+  const ratio = (num1 / 100) * num2
+  const total = digitCalc(num1 + ratio)
 
-// 分数 Fractioｎ
-const initFractioNum = 0;
-const [frac, setFrac] = useState(initFractioNum);
+  // 分数 Fractioｎ
+  // A
+  const initFractioNum = 0
+  const [frac, setFrac] = useState(initFractioNum)
+  // B
+  const initFractioNum2 = 0
+  const [frac2, setFrac2] = useState(initFractioNum2)
 
-const fracA = digitCalc(parseInt(val) / frac);
-// const fracB = digitCalc(parseInt(val) / frac);
+  const fracA = digitCalc(parseInt(val) / frac)
+  const fracB = val - fracA
 
 
   return (
@@ -47,7 +51,7 @@ const fracA = digitCalc(parseInt(val) / frac);
           type="number"
           pattern="\d*"
           onChange={(e) => {
-            setVal(e.target.value);
+            setVal(e.target.value)
           }}
           value={val}
           placeholder={val}
@@ -56,30 +60,33 @@ const fracA = digitCalc(parseInt(val) / frac);
         g ↑<button onClick={add}>1足す</button>
         <button onClick={remove}>1引く</button>↓
       </section>
+
+      <br />
       {/* 比率 分数 */}
+      <hr />
       <section>
-        <h4>事前に比率A:Bの 割合を出す場合</h4>
-        <p>割合A：{fracA}</p>
-        <input
-          type="number"
-          pattern="\d*"
-          onChange={(e) => {
-            setFrac(e.target.value);
-          }}
-          placeholder={frac}
-        />
+        <h4>事前に比率 1剤:2剤 の 割合を出す場合</h4>
+        <div className="flex flex-ai-center">
+          <p>多きい方の割合</p>
+          <b>
+            <input
+              type="number"
+              pattern="\d*"
+              onChange={(e) => {
+                setFrac(e.target.value)
+              }}
+              placeholder={frac}
+            /></b>
+          ({fracB ? fracB : "xxx"} g)
+          &nbsp;対&nbsp;
+          <p>&nbsp;<b>1</b> = {fracA ? fracA : "xxx"} g</p>
+        </div>
+        <p>
+          <h4>総容量：{total}g</h4>
+        </p>
       </section>
-      <section>
-        <p>割合B：{digitCalc(fracA / 100)}</p>
-        <input
-          type="number"
-          pattern="\d*"
-          onChange={(e) => {
-            setFrac(e.target.value);
-          }}
-          placeholder={frac}
-        />
-      </section>
+      <hr />
+      <br />
 
       {/* ２剤のパーセンテージ */}
       <section>
@@ -88,7 +95,7 @@ const fracA = digitCalc(parseInt(val) / frac);
           type="number"
           pattern="\d*"
           onChange={(e) => {
-            setCalc(e.target.value);
+            setCalc(e.target.value)
           }}
           placeholder={calc}
           step="0.1"
@@ -102,9 +109,34 @@ const fracA = digitCalc(parseInt(val) / frac);
       </section>
       <section>
         <h2>計算結果</h2>
-        <h3>入れるべき1剤レジンの重さは： {val}g</h3>
-        <h3>入れるべき2液の重さは： {val ? digitCalc(ratio) : ""}g</h3>
+        <div className="flex flex-ai-center">
+          入れるべき<b>1剤レジン</b>の重さは： <h3>{val}g</h3>
+        </div>
+        <div className="flex flex-ai-center">
+          入れるべき<b>2液</b>の重さは：<h3> {val ? digitCalc(ratio) : ""}g</h3>
+        </div>
       </section>
     </div>
-  );
-};
+  )
+}
+
+/*
+  function fraction() {
+    var a = Number(document.getElementById("hoge").value);
+    var b = Number(document.getElementById("fuga").value);
+    (function (a, b) {
+      for (var i = Math.min(a, b); i > 1; i--) {
+        if (a % i == 0 && b % i == 0) {
+          a = a / i;
+          b = b / i;
+          return arguments.callee(a, b);
+        }
+      }
+      document.getElementById("hoge2").value = a;
+      document.getElementById("fuga2").value = b;
+    })(a, b)
+  }
+  <input id="hoge" type="number"/>:<input id="fuga" type="number"/>
+  <input type="button" value="=" onclick="fraction();"/>
+  <input id="hoge2" type="number"/>:<input id="fuga2" type="number"/>
+ */
