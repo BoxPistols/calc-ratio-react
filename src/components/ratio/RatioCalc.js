@@ -69,7 +69,7 @@ export const RatioCalc = () => {
               setVal(e.target.value)
             }}
             value={val}
-            placeholder={val}
+            // placeholder={val}
             // step="0.1"
           />
           <p>g</p>
@@ -102,7 +102,7 @@ export const RatioCalc = () => {
               // step="0.1"
             />
             <div className="calcNow">
-              1剤:<b>{fractionDenominator}</b>g
+              1剤:<b>{fractionDenominator ? fractionDenominator : ""}</b>g
             </div>
           </div>
           <div className="flex flex-column">:</div>
@@ -119,11 +119,11 @@ export const RatioCalc = () => {
               // step="0.1"
             />
             <div className="calcNow">
-              2剤:<b>{fractionNumerator}</b>g
+              2剤:<b>{fractionNumerator ? fractionNumerator : ""}</b>g
             </div>
           </div>
         </div>
-        <p>総容量：{totalFracCalc}g</p>
+        <p>総容量：{totalFracCalc ? totalFracCalc : ""}g</p>
       </section>
       <hr />
 
@@ -139,7 +139,9 @@ export const RatioCalc = () => {
           <li>
             <div className="list">
               <div>総容量の再確認：</div>
-              <div className="final num ">{totalFracCalc}g</div>
+              <div className="final num ">
+                {totalFracCalc ? totalFracCalc : ""}g
+              </div>
             </div>
           </li>
           <li>
