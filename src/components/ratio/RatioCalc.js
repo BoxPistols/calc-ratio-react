@@ -75,10 +75,12 @@ export const RatioCalc = () => {
           <p>g</p>
         </div>
 
-        <div className="flex">
+        <div className="dummy">
           <div>微調整したい時：</div>
-          <button onClick={add}>+1足す</button>
-          <button onClick={remove}>-1引く</button>
+          <div className="flex">
+            <button onClick={add}>+1足す</button>
+            <button onClick={remove}>-1引く</button>
+          </div>
         </div>
       </section>
       <hr />
@@ -128,20 +130,41 @@ export const RatioCalc = () => {
       {/* ２剤のパーセンテージ */}
       <section>
         <h2>２剤の割合：容量</h2>
-        <h3 className="flex flex-ai-center">{fractionNumerator}g</h3>
+        <h3 className="flex">{fractionNumerator ? fractionNumerator : ""}g</h3>
       </section>
       {/* 計算 */}
       <section>
         <h2>最終計算結果</h2>
-        <div className="flex flex-ai-center">
-          <b></b>総容量の再確認： <h3>{total}g</h3>
-        </div>
-        <div className="flex flex-ai-center">
-          入れるべき<b>1剤レジン</b>の重さは： <h3>{fractionDenominator}g</h3>
-        </div>
-        <div className="flex flex-ai-center">
-          入れるべき<b>2液</b>の重さは：<h3> {fractionNumerator}g</h3>
-        </div>
+        <ul>
+          <li>
+            <div className="list">
+              <div>総容量の再確認：</div>
+              <div className="final num ">{total}g</div>
+            </div>
+          </li>
+          <li>
+            <div className="list">
+              <div>
+                入れる<b>1剤レジン</b>の重さは：
+              </div>
+              <div className="final num num-1">
+                {fractionDenominator ? fractionDenominator : ""}
+              </div>
+              <p>g</p>
+            </div>
+          </li>
+          <li>
+            <div className="list">
+              <div>
+                入れる<b>2液</b>の重さは：
+              </div>
+              <div className="final num num-2">
+                {fractionNumerator ? fractionNumerator : ""}
+              </div>
+              <p>g</p>
+            </div>
+          </li>
+        </ul>
       </section>
     </div>
   )
