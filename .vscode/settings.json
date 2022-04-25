@@ -1,7 +1,13 @@
 {
   "workbench.colorCustomizations": {
-    "activityBar.background": "#610216",
-    "titleBar.activeBackground": "#88021F",
-    "titleBar.activeForeground": "#FFFBFC"
-  }
+    "activityBar.background": "#d19216",
+    "titleBar.activeBackground": "#f1c216",
+    "titleBar.activeForeground": "#000"
+  },
+  "editor.formatOnSave": true,
+  "typescriptHero.imports.insertSemicolons": true,
+  "javascript.format.insertSpaceAfterSemicolonInForStatements": true,
+  "javascript.format.semicolons": "remove",
+  "typescript.format.insertSpaceAfterSemicolonInForStatements": true,
+  "prettier.semi": false
 }
