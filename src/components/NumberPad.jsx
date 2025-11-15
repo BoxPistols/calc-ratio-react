@@ -2,7 +2,7 @@ import React from "react"
 
 export const NumberPad = ({ value, onChange, label, unit = "g" }) => {
   const handleNumberClick = (num) => {
-    const currentValue = value === 0 ? "" : value.toString()
+    const currentValue = value === "0" ? "" : value.toString()
     const newValue = currentValue + num
     onChange(newValue)
   }
