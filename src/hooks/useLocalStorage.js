@@ -35,7 +35,7 @@ export const useCalculationHistory = () => {
       {
         ...calculation,
         timestamp: new Date().toISOString(),
-        id: Date.now(),
+        id: crypto.randomUUID(),
       },
       ...history,
     ].slice(0, 20) // 最新20件まで保存
