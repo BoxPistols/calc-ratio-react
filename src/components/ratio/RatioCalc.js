@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { NumberPad } from "../NumberPad"
+import { Toast } from "../Toast"
 import {
   useCalculationHistory,
   usePresets,
@@ -12,11 +13,10 @@ export const RatioCalc = () => {
   const [ratio1, setRatio1] = useState("0")
   const [ratio2, setRatio2] = useState("0")
   const [activeInput, setActiveInput] = useState(null)
-  const [showHistory, setShowHistory] = useState(false)
-  const [showPresets, setShowPresets] = useState(false)
-  const [showMemos, setShowMemos] = useState(false)
+  const [activeTab, setActiveTab] = useState("calc")
   const [presetName, setPresetName] = useState("")
   const [newMemo, setNewMemo] = useState("")
+  const [toast, setToast] = useState({ show: false, message: "" })
 
   // localStorage hooks
   const { history, addHistory, deleteHistory, clearHistory } =
@@ -53,6 +53,11 @@ export const RatioCalc = () => {
     }
   }
 
+  // トースト表示
+  const showToast = (message) => {
+    setToast({ show: true, message })
+  }
+
   // プリセットを保存
   const handleSavePreset = () => {
     if (presetName && r1 > 0 && r2 > 0) {
@@ -62,7 +67,7 @@ export const RatioCalc = () => {
         ratio2: r2,
       })
       setPresetName("")
-      alert("プリセットを保存しました")
+      showToast("プリセットを保存しました")
     }
   }
 
@@ -70,7 +75,7 @@ export const RatioCalc = () => {
   const loadPreset = (preset) => {
     setRatio1(preset.ratio1.toString())
     setRatio2(preset.ratio2.toString())
-    setShowPresets(false)
+    setActiveTab("calc")
   }
 
   // 履歴から読み込み
@@ -78,7 +83,7 @@ export const RatioCalc = () => {
     setTotalWeight(item.totalWeight.toString())
     setRatio1(item.ratio1.toString())
     setRatio2(item.ratio2.toString())
-    setShowHistory(false)
+    setActiveTab("calc")
   }
 
   // メモを追加
@@ -94,49 +99,33 @@ export const RatioCalc = () => {
       {/* タブナビゲーション */}
       <div className="tab-navigation">
         <button
-          className={`tab-btn ${!showHistory && !showPresets && !showMemos ? "active" : ""}`}
-          onClick={() => {
-            setShowHistory(false)
-            setShowPresets(false)
-            setShowMemos(false)
-          }}
+          className={`tab-btn ${activeTab === "calc" ? "active" : ""}`}
+          onClick={() => setActiveTab("calc")}
         >
           計算
         </button>
         <button
-          className={`tab-btn ${showHistory ? "active" : ""}`}
-          onClick={() => {
-            setShowHistory(true)
-            setShowPresets(false)
-            setShowMemos(false)
-          }}
+          className={`tab-btn ${activeTab === "history" ? "active" : ""}`}
+          onClick={() => setActiveTab("history")}
         >
           履歴
         </button>
         <button
-          className={`tab-btn ${showPresets ? "active" : ""}`}
-          onClick={() => {
-            setShowHistory(false)
-            setShowPresets(true)
-            setShowMemos(false)
-          }}
+          className={`tab-btn ${activeTab === "presets" ? "active" : ""}`}
+          onClick={() => setActiveTab("presets")}
         >
           プリセット
         </button>
         <button
-          className={`tab-btn ${showMemos ? "active" : ""}`}
-          onClick={() => {
-            setShowHistory(false)
-            setShowPresets(false)
-            setShowMemos(true)
-          }}
+          className={`tab-btn ${activeTab === "memos" ? "active" : ""}`}
+          onClick={() => setActiveTab("memos")}
         >
           メモ
         </button>
       </div>
 
       {/* メイン計算画面 */}
-      {!showHistory && !showPresets && !showMemos && (
+      {activeTab === "calc" && (
         <div className="calc-main">
           <div className="info-banner">水を基準に1ml=1gを前提とする</div>
 
@@ -244,7 +233,7 @@ export const RatioCalc = () => {
       )}
 
       {/* 履歴画面 */}
-      {showHistory && (
+      {activeTab === "history" && (
         <div className="history-panel">
           <div className="panel-header">
             <h2>計算履歴</h2>
@@ -295,7 +284,7 @@ export const RatioCalc = () => {
       )}
 
       {/* プリセット画面 */}
-      {showPresets && (
+      {activeTab === "presets" && (
         <div className="presets-panel">
           <div className="panel-header">
             <h2>よく使う比率</h2>
@@ -336,7 +325,7 @@ export const RatioCalc = () => {
       )}
 
       {/* メモ画面 */}
-      {showMemos && (
+      {activeTab === "memos" && (
         <div className="memos-panel">
           <div className="panel-header">
             <h2>備考メモ</h2>
@@ -376,6 +365,13 @@ export const RatioCalc = () => {
           )}
         </div>
       )}
+
+      {/* トースト通知 */}
+      <Toast
+        show={toast.show}
+        message={toast.message}
+        onClose={() => setToast({ show: false, message: "" })}
+      />
     </div>
   )
 }

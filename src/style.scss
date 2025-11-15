@@ -19,8 +19,11 @@
   --color-text: #333333;
   --color-text-light: #666666;
   --color-border: #e0e0e0;
+  --color-border-dark: #c0c0c0;
   --color-danger: #f44336;
+  --color-danger-dark: #d32f2f;
   --color-success: #4caf50;
+  --color-success-dark: #388e3c;
   --color-warning: #ff9800;
 
   // スペーシング
@@ -321,7 +324,7 @@ h1 {
     border-color: var(--color-danger);
 
     &:active {
-      background: darken(#f44336, 10%);
+      background: var(--color-danger-dark);
     }
   }
 
@@ -400,7 +403,7 @@ h1 {
     color: var(--color-text);
 
     &:active {
-      background: darken(#e0e0e0, 10%);
+      background: var(--color-border-dark);
     }
   }
 
@@ -409,7 +412,7 @@ h1 {
     color: white;
 
     &:active {
-      background: darken(#4caf50, 10%);
+      background: var(--color-success-dark);
     }
   }
 
@@ -653,6 +656,41 @@ h1 {
 
   .number-value {
     font-size: 2.5rem;
+  }
+}
+
+// =====================================
+// トースト通知
+// =====================================
+.toast {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+.toast-content {
+  background: var(--color-primary-dark);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-width: 250px;
+  text-align: center;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 }
 

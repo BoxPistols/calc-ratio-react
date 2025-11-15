@@ -65,19 +65,11 @@ export const usePresets = () => {
     setPresets([...presets, newPreset])
   }
 
-  const updatePreset = (id, updatedPreset) => {
-    setPresets(
-      presets.map((preset) =>
-        preset.id === id ? { ...preset, ...updatedPreset } : preset
-      )
-    )
-  }
-
   const deletePreset = (id) => {
     setPresets(presets.filter((preset) => preset.id !== id))
   }
 
-  return { presets, addPreset, updatePreset, deletePreset }
+  return { presets, addPreset, deletePreset }
 }
 
 // メモの管理
@@ -93,13 +85,9 @@ export const useMemos = () => {
     setMemos([...memos, newMemo])
   }
 
-  const updateMemo = (id, text) => {
-    setMemos(memos.map((memo) => (memo.id === id ? { ...memo, text } : memo)))
-  }
-
   const deleteMemo = (id) => {
     setMemos(memos.filter((memo) => memo.id !== id))
   }
 
-  return { memos, addMemo, updateMemo, deleteMemo }
+  return { memos, addMemo, deleteMemo }
 }
