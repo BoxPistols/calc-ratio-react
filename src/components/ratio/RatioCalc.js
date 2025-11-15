@@ -22,7 +22,7 @@ export const RatioCalc = () => {
   const { history, addHistory, deleteHistory, clearHistory } =
     useCalculationHistory()
   const { presets, addPreset, deletePreset } = usePresets()
-  const { memos, addMemo, updateMemo, deleteMemo } = useMemos()
+  const { memos, addMemo, deleteMemo } = useMemos()
 
   // 小数点処理
   const digitCalc = (value, digit = 1) => {
