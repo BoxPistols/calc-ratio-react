@@ -26,7 +26,7 @@ export const RatioCalc = () => {
 
   // 小数点処理
   const digitCalc = (value, digit = 1) => {
-    return Math.floor(value * Math.pow(10, digit)) / Math.pow(10, digit)
+    return Math.round(value * Math.pow(10, digit)) / Math.pow(10, digit)
   }
 
   // 計算
