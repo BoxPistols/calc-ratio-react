@@ -1,130 +1,671 @@
+// =====================================
+// リセット & ベース
+// =====================================
 * {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  line-height: 1.75em;
+}
+
+:root {
+  // カラーパレット
+  --color-primary: #00897b;
+  --color-primary-light: #4db6ac;
+  --color-primary-dark: #00695c;
+  --color-secondary: #ff6f61;
+  --color-secondary-light: #ff9688;
+  --color-bg: #f5f5f5;
+  --color-surface: #ffffff;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-border: #e0e0e0;
+  --color-danger: #f44336;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+
+  // スペーシング
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  // ボーダー
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+
+  // シャドウ
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 body {
-  margin: 0;
-  font-family: "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue",
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 2vh 4vw;
-  color: dimgray;
-  letter-spacing: 1.12px;
-}
-
-section {
-  margin-bottom: 1em;
-}
-
-h1 {
-  font-size: 1.1rem;
-}
-
-h2 {
-  margin: 1em 0 0;
-  font-size: 1.1rem;
-  color: teal;
-  font-weight: 600;
-}
-
-h3 {
-  font-size: 1.2rem;
-  color: tomato;
-  font-weight: 600;
-}
-
-b {
-  font-weight: 600;
-  font-size: 1.1em;
-}
-hr {
-  opacity: 0.4;
-}
-
-hr + section {
-  margin-top: 1em;
-  color: gray;
-}
-
-input {
-  font-size: 1.1em;
-  color: dimgray;
-  padding: 2px 0 2px 0.4em;
-  margin: 2px 4px;
-  max-width: 4em;
-  width: fit-content;
-  outline: none;
-  border: 2px solid dimgray;
-  border-radius: 8px;
-  vertical-align: baseline;
-}
-
-button {
-  border-radius: 2em;
-  outline: none;
-  border: 1px solid pink;
-  background-color: pink;
-  margin: 4px 4px 2px;
-  padding: 1px 1em;
-  font-size: 1em;
-  font-weight: 600;
-  color: dimgray;
-  white-space: nowrap;
-}
-ul,
-li {
-  list-style: none;
-  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
   padding: 0;
+  margin: 0;
+  // モバイルでのタップハイライト無効化
+  -webkit-tap-highlight-color: transparent;
+  // モバイルでの選択を快適に
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-li h3 {
-  padding-left: 1em;
+// =====================================
+// ヘッダー
+// =====================================
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  margin: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-p {
-  font-size: 0.9em;
+// =====================================
+// メインコンテナ
+// =====================================
+.ratio-calc {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: var(--color-surface);
+  min-height: calc(100vh - 3.5rem);
+  box-shadow: var(--shadow-md);
 }
 
-.calcNow {
-  margin: 4px 2px 0;
-  padding: 2px 0.5em;
-  background-color: darken(aliceblue, 5%);
-  color: dimgray;
-  border-radius: 4px;
-}
-
-.list {
-  display: inline-flex;
-  align-items: baseline;
-}
-
-.num {
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-.num-1 {
-  color: teal;
-}
-.num-2 {
-  color: tomato;
-}
-// Util
-.flex {
+// =====================================
+// タブナビゲーション
+// =====================================
+.tab-navigation {
   display: flex;
+  background-color: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 3.5rem;
+  z-index: 99;
 }
-.flex-jc-center {
+
+.tab-btn {
+  flex: 1;
+  padding: var(--spacing-md);
+  background: transparent;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+}
+
+// =====================================
+// 計算画面
+// =====================================
+.calc-main {
+  padding: var(--spacing-lg);
+}
+
+.info-banner {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+// =====================================
+// 計算結果パネル
+// =====================================
+.result-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  gap: var(--spacing-sm);
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
 }
-.flex-ai-center {
+
+.result-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.result-label {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.result-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+
+  &.total {
+    color: var(--color-text);
+  }
+
+  &.agent1 {
+    color: var(--color-primary);
+  }
+
+  &.agent2 {
+    color: var(--color-secondary);
+  }
+}
+
+.result-divider {
+  font-size: 1.2rem;
+  color: var(--color-text-light);
+  font-weight: 600;
+  padding: 0 var(--spacing-xs);
+}
+
+// =====================================
+// 入力セレクター
+// =====================================
+.input-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.input-select-btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+
+  strong {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.active {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, #f0f9f8, #e0f2f1);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// =====================================
+// 数字パッド
+// =====================================
+.number-pad-container {
+  margin-bottom: var(--spacing-lg);
+}
+
+.number-pad {
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.number-pad-header {
+  margin-bottom: var(--spacing-lg);
+
+  label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+  }
+}
+
+.number-display {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  text-align: right;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  min-height: 60px;
+  border: 2px solid var(--color-border);
+}
+
+.number-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.number-unit {
+  font-size: 1.2rem;
+  color: var(--color-text-light);
+  font-weight: 600;
+}
+
+.number-pad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.number-btn {
+  padding: var(--spacing-lg);
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sm);
+  min-height: 60px;
+
+  &:active {
+    transform: scale(0.95);
+    background: var(--color-primary-light);
+    color: white;
+    border-color: var(--color-primary);
+  }
+
+  &.number-btn-clear {
+    background: var(--color-danger);
+    color: white;
+    border-color: var(--color-danger);
+
+    &:active {
+      background: darken(#f44336, 10%);
+    }
+  }
+
+  &.number-btn-dot {
+    font-size: 2rem;
+  }
+}
+
+.number-pad-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.action-btn {
+  padding: var(--spacing-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sm);
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.action-btn-clear {
+    background: var(--color-border);
+    color: var(--color-text);
+  }
+
+  &.action-btn-plus,
+  &.action-btn-minus {
+    background: var(--color-primary);
+    color: white;
+  }
+}
+
+// =====================================
+// ボタンスタイル
+// =====================================
+.action-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.btn {
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.btn-primary {
+    background: var(--color-primary);
+    color: white;
+
+    &:active {
+      background: var(--color-primary-dark);
+    }
+  }
+
+  &.btn-secondary {
+    background: var(--color-border);
+    color: var(--color-text);
+
+    &:active {
+      background: darken(#e0e0e0, 10%);
+    }
+  }
+
+  &.btn-save {
+    background: var(--color-success);
+    color: white;
+
+    &:active {
+      background: darken(#4caf50, 10%);
+    }
+  }
+
+  &.btn-primary-sm,
+  &.btn-danger-sm {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.85rem;
+  }
+
+  &.btn-primary-sm {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  &.btn-danger-sm {
+    background: var(--color-danger);
+    color: white;
+  }
+
+  &.btn-load {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+    background: var(--color-primary-light);
+    color: white;
+  }
+}
+
+// =====================================
+// プリセット保存
+// =====================================
+.preset-save-section {
+  display: flex;
+  gap: var(--spacing-sm);
+  background: linear-gradient(135deg, #fff8e1, #ffecb3);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border: 2px solid #ffc107;
+}
+
+.preset-name-input {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  outline: none;
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+}
+
+// =====================================
+// パネルヘッダー
+// =====================================
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 2px solid var(--color-border);
+
+  h2 {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    margin: 0;
+  }
+}
+
+// =====================================
+// 履歴
+// =====================================
+.history-panel,
+.presets-panel,
+.memos-panel {
+  min-height: 400px;
+}
+
+.history-list,
+.presets-list,
+.memos-list {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.history-item,
+.preset-item,
+.memo-item {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.history-header,
+.memo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.history-date,
+.memo-date {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+
+  &.btn-delete {
+    color: var(--color-danger);
+
+    &:active {
+      background: rgba(244, 67, 54, 0.1);
+    }
+  }
+}
+
+.history-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.history-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+
+  .agent1 {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .agent2 {
+    color: var(--color-secondary);
+    font-weight: 600;
+  }
+}
+
+// =====================================
+// プリセット
+// =====================================
+.preset-item {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
-.flex-ai-baseline {
-  align-items: baseline;
+
+.preset-content {
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin: 0;
+  }
 }
-.flex-column {
-  flex-direction: column;
+
+.preset-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+// =====================================
+// メモ
+// =====================================
+.memo-input-section {
+  padding: var(--spacing-md);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.memo-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  font-family: inherit;
+  margin-bottom: var(--spacing-md);
+  resize: vertical;
+  outline: none;
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+}
+
+.memo-text {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+// =====================================
+// 空メッセージ
+// =====================================
+.empty-message {
+  text-align: center;
+  color: var(--color-text-light);
+  padding: var(--spacing-xl);
+  font-size: 0.95rem;
+}
+
+// =====================================
+// レスポンシブ対応
+// =====================================
+@media (min-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .result-value {
+    font-size: 2.2rem;
+  }
+
+  .number-value {
+    font-size: 2.5rem;
+  }
+}
+
+// =====================================
+// タッチデバイス最適化
+// =====================================
+@media (hover: none) and (pointer: coarse) {
+  // タッチデバイス用の最適化
+  .tab-btn,
+  .input-select-btn,
+  .number-btn,
+  .action-btn,
+  .btn {
+    min-height: 44px; // Appleのヒューマンインターフェースガイドライン推奨
+  }
 }

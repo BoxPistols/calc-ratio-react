@@ -1,231 +1,381 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import { NumberPad } from "../NumberPad"
+import {
+  useCalculationHistory,
+  usePresets,
+  useMemos,
+} from "../../hooks/useLocalStorage"
 
 export const RatioCalc = () => {
-  // 1剤 元の容量
-  const initVal = 0
-  const [val, setVal] = useState(initVal)
-  const add = () => setVal(() => parseInt(val) + 1)
-  const remove = () => setVal(() => parseInt(val) - 1)
+  // 状態管理
+  const [totalWeight, setTotalWeight] = useState("0")
+  const [ratio1, setRatio1] = useState("0")
+  const [ratio2, setRatio2] = useState("0")
+  const [activeInput, setActiveInput] = useState(null)
+  const [showHistory, setShowHistory] = useState(false)
+  const [showPresets, setShowPresets] = useState(false)
+  const [showMemos, setShowMemos] = useState(false)
+  const [presetName, setPresetName] = useState("")
+  const [newMemo, setNewMemo] = useState("")
 
-  // ２剤 元の容量から比率を計算する
-  const initCalc = 0
-  const [calc, setCalc] = useState(initCalc)
+  // localStorage hooks
+  const { history, addHistory, deleteHistory, clearHistory } =
+    useCalculationHistory()
+  const { presets, addPreset, deletePreset } = usePresets()
+  const { memos, addMemo, updateMemo, deleteMemo } = useMemos()
 
-  // 小数点
-  const digit = 1
-  const digitCalc = (_v) => {
-    return Math.floor(_v * Math.pow(10, digit)) / Math.pow(10, digit)
+  // 小数点処理
+  const digitCalc = (value, digit = 1) => {
+    return Math.floor(value * Math.pow(10, digit)) / Math.pow(10, digit)
   }
 
-  // 値を数値に変換、小数点以下を四捨五入
-  let pVal = parseInt(val)
-  const num1 = pVal
-  const num2 = parseInt(calc)
-  const ratio = (num1 / 100) * num2
-  // const total = digitCalc(num1 + ratio)
+  // 計算
+  const num1 = parseFloat(totalWeight) || 0
+  const r1 = parseFloat(ratio1) || 0
+  const r2 = parseFloat(ratio2) || 0
+  const totalRatio = r1 + r2
 
-  // 分数 Fractioｎ
-  /**
-   * 分数　    分母　       分子
-   * fraction denominator numerator
-   *
-   */
+  const result1 = totalRatio > 0 ? digitCalc((num1 * r1) / totalRatio) : 0
+  const result2 = totalRatio > 0 ? digitCalc((num1 * r2) / totalRatio) : 0
+  const calculatedTotal = digitCalc(result1 + result2)
 
-  // 分数計算の元
-  /* ------ 分数を計算 ------ */
-  // 分子の役割
-  const initFrac = 0
-  const [frac, setFrac] = useState(initFrac)
-  const pFlac = parseInt(frac)
+  // 計算結果を履歴に保存
+  const saveToHistory = () => {
+    if (result1 > 0 && result2 > 0) {
+      addHistory({
+        totalWeight: num1,
+        ratio1: r1,
+        ratio2: r2,
+        result1,
+        result2,
+        total: calculatedTotal,
+      })
+    }
+  }
 
-  // 分母の役割
-  const initFrac2 = 0
-  const [frac2, setFrac2] = useState(initFrac2)
-  const pFlac2 = parseInt(frac2)
+  // プリセットを保存
+  const handleSavePreset = () => {
+    if (presetName && r1 > 0 && r2 > 0) {
+      addPreset({
+        name: presetName,
+        ratio1: r1,
+        ratio2: r2,
+      })
+      setPresetName("")
+      alert("プリセットを保存しました")
+    }
+  }
 
-  // これを元に分子/分母を計算
-  // 一旦合計を出す
-  const totalFrac = pFlac + pFlac2
-  const fractionDenominator = digitCalc((pVal * pFlac) / totalFrac)
-  const fractionNumerator = digitCalc((pVal * pFlac2) / totalFrac)
-  const totalFracCalc = digitCalc(fractionDenominator + fractionNumerator)
+  // プリセットを読み込み
+  const loadPreset = (preset) => {
+    setRatio1(preset.ratio1.toString())
+    setRatio2(preset.ratio2.toString())
+    setShowPresets(false)
+  }
 
-  // jsx
+  // 履歴から読み込み
+  const loadFromHistory = (item) => {
+    setTotalWeight(item.totalWeight.toString())
+    setRatio1(item.ratio1.toString())
+    setRatio2(item.ratio2.toString())
+    setShowHistory(false)
+  }
+
+  // メモを追加
+  const handleAddMemo = () => {
+    if (newMemo.trim()) {
+      addMemo(newMemo)
+      setNewMemo("")
+    }
+  }
+
   return (
-    <div>
-      {/* info */}
-      <p>水を基準に1ml=1gを前提とする</p>
+    <div className="ratio-calc">
+      {/* タブナビゲーション */}
+      <div className="tab-navigation">
+        <button
+          className={`tab-btn ${!showHistory && !showPresets && !showMemos ? "active" : ""}`}
+          onClick={() => {
+            setShowHistory(false)
+            setShowPresets(false)
+            setShowMemos(false)
+          }}
+        >
+          計算
+        </button>
+        <button
+          className={`tab-btn ${showHistory ? "active" : ""}`}
+          onClick={() => {
+            setShowHistory(true)
+            setShowPresets(false)
+            setShowMemos(false)
+          }}
+        >
+          履歴
+        </button>
+        <button
+          className={`tab-btn ${showPresets ? "active" : ""}`}
+          onClick={() => {
+            setShowHistory(false)
+            setShowPresets(true)
+            setShowMemos(false)
+          }}
+        >
+          プリセット
+        </button>
+        <button
+          className={`tab-btn ${showMemos ? "active" : ""}`}
+          onClick={() => {
+            setShowHistory(false)
+            setShowPresets(false)
+            setShowMemos(true)
+          }}
+        >
+          メモ
+        </button>
+      </div>
 
-      <hr />
-      <section>
-        {/* 1剤のレジンの重さ */}
-        {/* <h2>1剤レジンの重さ：初期設定</h2> */}
-        <h2>作成する全体の重さ</h2>
-        <div className="flex flex-ai-baseline">
-          <input
-            type="number"
-            pattern="\d*"
-            onChange={(e) => {
-              setVal(e.target.value)
-            }}
-            value={val}
-            // placeholder={val}
-            // step="0.1"
-          />
-          <p>g</p>
-        </div>
+      {/* メイン計算画面 */}
+      {!showHistory && !showPresets && !showMemos && (
+        <div className="calc-main">
+          <div className="info-banner">水を基準に1ml=1gを前提とする</div>
 
-        <div className="dummy">
-          <div>微調整したい時：</div>
-          <div className="flex">
-            <button onClick={add}>+1足す</button>
-            <button onClick={remove}>-1引く</button>
+          {/* 計算結果表示エリア */}
+          <div className="result-panel">
+            <div className="result-item">
+              <span className="result-label">総容量</span>
+              <span className="result-value total">{calculatedTotal}g</span>
+            </div>
+            <div className="result-divider">→</div>
+            <div className="result-item">
+              <span className="result-label">1剤</span>
+              <span className="result-value agent1">{result1}g</span>
+            </div>
+            <div className="result-divider">+</div>
+            <div className="result-item">
+              <span className="result-label">2剤</span>
+              <span className="result-value agent2">{result2}g</span>
+            </div>
           </div>
-        </div>
-      </section>
-      <hr />
-      {/* 比率計算 */}
-      <section>
-        <h2>1剤:2剤の比率</h2>
-        {/* <h4>事前に比ｓ率 1剤:2剤 の 割合を出す場合</h4> */}
-        <div className="flex flex-ai-center">
-          {/* 分母 */}
-          <div className="flex flex-column flex-jc-center flex-ai-center">
-            <div>分母の数</div>
-            <input
-              type="number"
-              pattern="\d*"
-              onChange={(e) => {
-                setFrac(e.target.value)
+
+          {/* 入力エリア選択ボタン */}
+          <div className="input-selector">
+            <button
+              className={`input-select-btn ${activeInput === "total" ? "active" : ""}`}
+              onClick={() => setActiveInput("total")}
+            >
+              全体の重さ: <strong>{totalWeight}g</strong>
+            </button>
+            <button
+              className={`input-select-btn ${activeInput === "ratio1" ? "active" : ""}`}
+              onClick={() => setActiveInput("ratio1")}
+            >
+              比率1: <strong>{ratio1}</strong>
+            </button>
+            <button
+              className={`input-select-btn ${activeInput === "ratio2" ? "active" : ""}`}
+              onClick={() => setActiveInput("ratio2")}
+            >
+              比率2: <strong>{ratio2}</strong>
+            </button>
+          </div>
+
+          {/* 数字パッド */}
+          {activeInput && (
+            <div className="number-pad-container">
+              {activeInput === "total" && (
+                <NumberPad
+                  value={totalWeight}
+                  onChange={setTotalWeight}
+                  label="作成する全体の重さ"
+                  unit="g"
+                />
+              )}
+              {activeInput === "ratio1" && (
+                <NumberPad
+                  value={ratio1}
+                  onChange={setRatio1}
+                  label="1剤の比率"
+                  unit=""
+                />
+              )}
+              {activeInput === "ratio2" && (
+                <NumberPad
+                  value={ratio2}
+                  onChange={setRatio2}
+                  label="2剤の比率"
+                  unit=""
+                />
+              )}
+            </div>
+          )}
+
+          {/* アクションボタン */}
+          <div className="action-buttons">
+            <button className="btn btn-primary" onClick={saveToHistory}>
+              履歴に保存
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                setTotalWeight("0")
+                setRatio1("0")
+                setRatio2("0")
               }}
-              placeholder={frac}
-              // step="0.1"
-            />
-            <div className="calcNow">
-              1剤:<b>{fractionDenominator ? fractionDenominator : ""}</b>g
-            </div>
+            >
+              リセット
+            </button>
           </div>
-          <div className="flex flex-column">:</div>
-          {/* 分子 */}
-          <div className="flex flex-column flex-jc-center flex-ai-center">
-            <div>分子の数</div>
+
+          {/* プリセット保存 */}
+          <div className="preset-save-section">
             <input
-              type="number"
-              pattern="\d*"
-              onChange={(e) => {
-                setFrac2(e.target.value)
-              }}
-              placeholder={frac2}
-              // step="0.1"
+              type="text"
+              className="preset-name-input"
+              placeholder="この比率に名前をつけて保存"
+              value={presetName}
+              onChange={(e) => setPresetName(e.target.value)}
             />
-            <div className="calcNow">
-              2剤:<b>{fractionNumerator ? fractionNumerator : ""}</b>g
-            </div>
+            <button className="btn btn-save" onClick={handleSavePreset}>
+              プリセット保存
+            </button>
           </div>
         </div>
-        <p>総容量：{totalFracCalc ? totalFracCalc : ""}g</p>
-      </section>
-      <hr />
+      )}
 
-      {/* ２剤のパーセンテージ */}
-      {/* <section>
-        <h2>２剤の割合：容量</h2>
-        <h3 className="flex">{fractionNumerator ? fractionNumerator : ""}g</h3>
-      </section> */}
-      {/* 計算 */}
-      <section>
-        <h2>最終計算結果</h2>
-        <ul>
-          <li>
-            <div className="list">
-              <div>総容量の再確認：</div>
-              <div className="final num ">
-                {totalFracCalc ? totalFracCalc : ""}g
-              </div>
+      {/* 履歴画面 */}
+      {showHistory && (
+        <div className="history-panel">
+          <div className="panel-header">
+            <h2>計算履歴</h2>
+            <button className="btn btn-danger-sm" onClick={clearHistory}>
+              全削除
+            </button>
+          </div>
+          {history.length === 0 ? (
+            <p className="empty-message">履歴がありません</p>
+          ) : (
+            <div className="history-list">
+              {history.map((item) => (
+                <div key={item.id} className="history-item">
+                  <div className="history-header">
+                    <span className="history-date">
+                      {new Date(item.timestamp).toLocaleString("ja-JP")}
+                    </span>
+                    <button
+                      className="btn-icon btn-delete"
+                      onClick={() => deleteHistory(item.id)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <div className="history-content">
+                    <div className="history-row">
+                      <span>総容量: {item.totalWeight}g</span>
+                      <span>
+                        比率: {item.ratio1}:{item.ratio2}
+                      </span>
+                    </div>
+                    <div className="history-row">
+                      <span className="agent1">1剤: {item.result1}g</span>
+                      <span className="agent2">2剤: {item.result2}g</span>
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-load"
+                    onClick={() => loadFromHistory(item)}
+                  >
+                    この計算を読み込む
+                  </button>
+                </div>
+              ))}
             </div>
-          </li>
-          <li>
-            <div className="list">
-              <div>
-                入れる<b>1剤レジン</b>の重さは：
-              </div>
-              <div className="final num num-1">
-                {fractionDenominator ? fractionDenominator : ""}
-              </div>
-              <p>g</p>
+          )}
+        </div>
+      )}
+
+      {/* プリセット画面 */}
+      {showPresets && (
+        <div className="presets-panel">
+          <div className="panel-header">
+            <h2>よく使う比率</h2>
+          </div>
+          {presets.length === 0 ? (
+            <p className="empty-message">
+              プリセットがありません。計算画面で保存してください。
+            </p>
+          ) : (
+            <div className="presets-list">
+              {presets.map((preset) => (
+                <div key={preset.id} className="preset-item">
+                  <div className="preset-content">
+                    <h3>{preset.name}</h3>
+                    <p>
+                      比率: {preset.ratio1}:{preset.ratio2}
+                    </p>
+                  </div>
+                  <div className="preset-actions">
+                    <button
+                      className="btn btn-primary-sm"
+                      onClick={() => loadPreset(preset)}
+                    >
+                      使用
+                    </button>
+                    <button
+                      className="btn btn-danger-sm"
+                      onClick={() => deletePreset(preset.id)}
+                    >
+                      削除
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          </li>
-          <li>
-            <div className="list">
-              <div>
-                入れる<b>2液</b>の重さは：
-              </div>
-              <div className="final num num-2">
-                {fractionNumerator ? fractionNumerator : ""}
-              </div>
-              <p>g</p>
+          )}
+        </div>
+      )}
+
+      {/* メモ画面 */}
+      {showMemos && (
+        <div className="memos-panel">
+          <div className="panel-header">
+            <h2>備考メモ</h2>
+          </div>
+          <div className="memo-input-section">
+            <textarea
+              className="memo-textarea"
+              placeholder="メモを入力..."
+              value={newMemo}
+              onChange={(e) => setNewMemo(e.target.value)}
+            />
+            <button className="btn btn-primary" onClick={handleAddMemo}>
+              メモを追加
+            </button>
+          </div>
+          {memos.length === 0 ? (
+            <p className="empty-message">メモがありません</p>
+          ) : (
+            <div className="memos-list">
+              {memos.map((memo) => (
+                <div key={memo.id} className="memo-item">
+                  <div className="memo-header">
+                    <span className="memo-date">
+                      {new Date(memo.timestamp).toLocaleString("ja-JP")}
+                    </span>
+                    <button
+                      className="btn-icon btn-delete"
+                      onClick={() => deleteMemo(memo.id)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <p className="memo-text">{memo.text}</p>
+                </div>
+              ))}
             </div>
-          </li>
-        </ul>
-      </section>
+          )}
+        </div>
+      )}
     </div>
   )
 }
-
-/**
-  <div className="wrap">
-    <h1>比率</h1>
-    foo:<input type="number" id="foo" /> <br />
-    <br />
-    hoge<input type="number" id="hoge" /> : fuga<input type="number" id="fuga" />
-    <br />
-    <input type="button" defaultValue="計算" onclick="res();" /> <br />
-    hoge<input type="number" id="hoge2" /> : fuga2<input type="number" id="fuga2" />
-    <br />
-    Bar:
-    <div id="bar">xxx</div>
-  </div>
-*/
-
-/*
-function res() {
-  const a = Number(document.getElementById("hoge").value);
-  const b = Number(document.getElementById("fuga").value);
-  const t = Number(document.getElementById("foo").value);
-
-  (function (a, b) {
-    for (let i = Math.min(a, b); i > 1; i--) {
-      if (a % i == 0 && b % i == 0) {
-        a = i / a ;
-        b = i / b ;
-        return arguments.callee(a, b);
-      }
-    }
-    let cal = t / (a + b)
-    document.getElementById("hoge2").value = Math.floor(cal * a);
-    document.getElementById("fuga2").value = Math.floor(cal * b) ;
-    const bar = document.getElementById("bar").innerHTML = cal * a + cal * b;
-  })(a, b, t)
-}
-*/
-
-/*
-  function fraction() {
-    var a = Number(document.getElementById("hoge").value);
-    var b = Number(document.getElementById("fuga").value);
-    (function (a, b) {
-      for (var i = Math.min(a, b); i > 1; i--) {
-        if (a % i == 0 && b % i == 0) {
-          a = a / i;
-          b = b / i;
-          return arguments.callee(a, b);
-        }
-      }
-      document.getElementById("hoge2").value = a;
-      document.getElementById("fuga2").value = b;
-    })(a, b)
-  }
-  <input id="hoge" type="number"/>:<input id="fuga" type="number"/>
-  <input type="button" value="=" onclick="fraction();"/>
-  <input id="hoge2" type="number"/>:<input id="fuga2" type="number"/>
- */
