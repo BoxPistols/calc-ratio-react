@@ -24,12 +24,27 @@ export const NumberPad = ({ value, onChange, label, unit = "g" }) => {
     }
   }
 
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value
+    // 数値と小数点のみ許可
+    if (inputValue === "" || /^\d*\.?\d*$/.test(inputValue)) {
+      onChange(inputValue || "0")
+    }
+  }
+
   return (
     <div className="number-pad">
       <div className="number-pad-header">
         <label>{label}</label>
         <div className="number-display">
-          <span className="number-value">{value || 0}</span>
+          <input
+            type="text"
+            inputMode="decimal"
+            className="number-input"
+            value={value}
+            onChange={handleInputChange}
+            placeholder="0"
+          />
           <span className="number-unit">{unit}</span>
         </div>
       </div>

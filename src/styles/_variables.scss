@@ -1,0 +1,41 @@
+// =====================================
+// CSS Variables
+// =====================================
+:root {
+  // やわらかいカラーパレット
+  --color-primary: #5ab9b0;
+  --color-primary-light: #7eccc5;
+  --color-primary-dark: #3da399;
+  --color-secondary: #ff9a8b;
+  --color-secondary-light: #ffb5a7;
+  --color-bg: #faf9f7;
+  --color-surface: #ffffff;
+  --color-text: #4a4a4a;
+  --color-text-light: #8a8a8a;
+  --color-border: #e8e6e3;
+  --color-border-dark: #d0cec9;
+  --color-danger: #ff7675;
+  --color-danger-dark: #d63031;
+  --color-success: #6dbb87;
+  --color-success-dark: #4ca66c;
+  --color-warning: #fdcb6e;
+
+  // スペーシング
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  // やわらかいボーダー（角丸を大きく）
+  --border-radius-sm: 12px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 24px;
+
+  // やわらかいシャドウ
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.12);
+}

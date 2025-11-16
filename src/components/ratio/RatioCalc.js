@@ -24,22 +24,24 @@ export const RatioCalc = () => {
   const { presets, addPreset, deletePreset } = usePresets()
   const { memos, addMemo, deleteMemo } = useMemos()
 
-  // 小数点処理
+  // ユーティリティ関数
   const digitCalc = (value, digit = 1) => {
     return Math.round(value * Math.pow(10, digit)) / Math.pow(10, digit)
   }
 
-  // 計算
-  const num1 = parseFloat(totalWeight) || 0
-  const r1 = parseFloat(ratio1) || 0
-  const r2 = parseFloat(ratio2) || 0
+  const parseValue = (value) => parseFloat(value) || 0
+
+  // 計算ロジック
+  const num1 = parseValue(totalWeight)
+  const r1 = parseValue(ratio1)
+  const r2 = parseValue(ratio2)
   const totalRatio = r1 + r2
 
   const result1 = totalRatio > 0 ? digitCalc((num1 * r1) / totalRatio) : 0
   const result2 = totalRatio > 0 ? digitCalc((num1 * r2) / totalRatio) : 0
   const calculatedTotal = digitCalc(result1 + result2)
 
-  // 計算結果を履歴に保存
+  // イベントハンドラー
   const saveToHistory = () => {
     if (result1 > 0 && result2 > 0) {
       addHistory({
@@ -53,12 +55,10 @@ export const RatioCalc = () => {
     }
   }
 
-  // トースト表示
   const showToast = (message) => {
     setToast({ show: true, message })
   }
 
-  // プリセットを保存
   const handleSavePreset = () => {
     if (presetName && r1 > 0 && r2 > 0) {
       addPreset({
@@ -71,14 +71,12 @@ export const RatioCalc = () => {
     }
   }
 
-  // プリセットを読み込み
   const loadPreset = (preset) => {
     setRatio1(preset.ratio1.toString())
     setRatio2(preset.ratio2.toString())
     setActiveTab("calc")
   }
 
-  // 履歴から読み込み
   const loadFromHistory = (item) => {
     setTotalWeight(item.totalWeight.toString())
     setRatio1(item.ratio1.toString())
@@ -86,11 +84,32 @@ export const RatioCalc = () => {
     setActiveTab("calc")
   }
 
-  // メモを追加
   const handleAddMemo = () => {
     if (newMemo.trim()) {
       addMemo(newMemo)
       setNewMemo("")
+    }
+  }
+
+  const handleReset = () => {
+    setTotalWeight("0")
+    setRatio1("0")
+    setRatio2("0")
+  }
+
+  const handleInputChange = (field) => (value) => {
+    switch (field) {
+      case "total":
+        setTotalWeight(value)
+        break
+      case "ratio1":
+        setRatio1(value)
+        break
+      case "ratio2":
+        setRatio2(value)
+        break
+      default:
+        break
     }
   }
 

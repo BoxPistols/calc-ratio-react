@@ -1,0 +1,33 @@
+// =====================================
+// Tab Navigation
+// =====================================
+.tab-navigation {
+  display: flex;
+  background-color: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 3.5rem;
+  z-index: 99;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: var(--spacing-md);
+  background: transparent;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+}

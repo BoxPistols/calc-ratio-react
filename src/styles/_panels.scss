@@ -1,0 +1,148 @@
+// =====================================
+// Panel Styles (History, Presets, Memos)
+// =====================================
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 2px solid var(--color-border);
+
+  h2 {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    margin: 0;
+  }
+}
+
+.history-panel,
+.presets-panel,
+.memos-panel {
+  min-height: 400px;
+}
+
+.history-list,
+.presets-list,
+.memos-list {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.history-item,
+.preset-item,
+.memo-item {
+  background: var(--color-surface);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.history-header,
+.memo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.history-date,
+.memo-date {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+.history-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.history-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+
+  .agent1 {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .agent2 {
+    color: var(--color-secondary);
+    font-weight: 600;
+  }
+}
+
+.preset-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preset-content {
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+}
+
+.preset-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.memo-input-section {
+  padding: var(--spacing-md);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.memo-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  font-size: 1rem;
+  font-family: inherit;
+  margin-bottom: var(--spacing-md);
+  resize: vertical;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+
+  &:focus {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 0 0 3px rgba(90, 185, 176, 0.2);
+  }
+}
+
+.memo-text {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--color-text-light);
+  padding: var(--spacing-xl);
+  font-size: 0.95rem;
+}
