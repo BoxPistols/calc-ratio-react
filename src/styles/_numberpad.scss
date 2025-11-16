@@ -1,0 +1,146 @@
+// =====================================
+// Number Pad Styles
+// =====================================
+.number-pad-container {
+  margin-bottom: var(--spacing-lg);
+}
+
+.number-pad {
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.number-pad-header {
+  margin-bottom: var(--spacing-lg);
+
+  label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+  }
+}
+
+.number-display {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  text-align: right;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  min-height: 60px;
+  border: 2px solid var(--color-border);
+  transition: border-color 0.3s ease;
+}
+
+.number-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  width: 100%;
+
+  &::placeholder {
+    color: var(--color-border-dark);
+  }
+}
+
+.number-unit {
+  font-size: 1.2rem;
+  color: var(--color-text-light);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.number-pad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.number-btn {
+  padding: var(--spacing-lg);
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--color-surface);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-md);
+  min-height: 60px;
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background: var(--color-primary-light);
+    color: white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  &.number-btn-clear {
+    background: linear-gradient(135deg, var(--color-danger), var(--color-danger-dark));
+    color: white;
+    box-shadow: var(--shadow-md);
+
+    &:active {
+      background: var(--color-danger-dark);
+    }
+  }
+
+  &.number-btn-dot {
+    font-size: 2rem;
+  }
+}
+
+.number-pad-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.action-btn {
+  padding: var(--spacing-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-lg);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-md);
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &.action-btn-clear {
+    background: var(--color-border);
+    color: var(--color-text);
+  }
+
+  &.action-btn-plus,
+  &.action-btn-minus {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+  }
+}

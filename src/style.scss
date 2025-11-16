@@ -1,130 +1,14 @@
-* {
-  margin: 0;
-  box-sizing: border-box;
-  line-height: 1.75em;
-}
+// =====================================
+// Main Style Entry Point
+// =====================================
+// モジュール化されたスタイルをインポート
 
-body {
-  margin: 0;
-  font-family: "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding: 2vh 4vw;
-  color: dimgray;
-  letter-spacing: 1.12px;
-}
-
-section {
-  margin-bottom: 1em;
-}
-
-h1 {
-  font-size: 1.1rem;
-}
-
-h2 {
-  margin: 1em 0 0;
-  font-size: 1.1rem;
-  color: teal;
-  font-weight: 600;
-}
-
-h3 {
-  font-size: 1.2rem;
-  color: tomato;
-  font-weight: 600;
-}
-
-b {
-  font-weight: 600;
-  font-size: 1.1em;
-}
-hr {
-  opacity: 0.4;
-}
-
-hr + section {
-  margin-top: 1em;
-  color: gray;
-}
-
-input {
-  font-size: 1.1em;
-  color: dimgray;
-  padding: 2px 0 2px 0.4em;
-  margin: 2px 4px;
-  max-width: 4em;
-  width: fit-content;
-  outline: none;
-  border: 2px solid dimgray;
-  border-radius: 8px;
-  vertical-align: baseline;
-}
-
-button {
-  border-radius: 2em;
-  outline: none;
-  border: 1px solid pink;
-  background-color: pink;
-  margin: 4px 4px 2px;
-  padding: 1px 1em;
-  font-size: 1em;
-  font-weight: 600;
-  color: dimgray;
-  white-space: nowrap;
-}
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li h3 {
-  padding-left: 1em;
-}
-
-p {
-  font-size: 0.9em;
-}
-
-.calcNow {
-  margin: 4px 2px 0;
-  padding: 2px 0.5em;
-  background-color: darken(aliceblue, 5%);
-  color: dimgray;
-  border-radius: 4px;
-}
-
-.list {
-  display: inline-flex;
-  align-items: baseline;
-}
-
-.num {
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-.num-1 {
-  color: teal;
-}
-.num-2 {
-  color: tomato;
-}
-// Util
-.flex {
-  display: flex;
-}
-.flex-jc-center {
-  justify-content: center;
-}
-.flex-ai-center {
-  align-items: center;
-}
-.flex-ai-baseline {
-  align-items: baseline;
-}
-.flex-column {
-  flex-direction: column;
-}
+@import './styles/variables';
+@import './styles/base';
+@import './styles/tabs';
+@import './styles/calculator';
+@import './styles/numberpad';
+@import './styles/buttons';
+@import './styles/panels';
+@import './styles/toast';
+@import './styles/responsive';

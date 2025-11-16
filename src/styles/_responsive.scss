@@ -1,0 +1,27 @@
+// =====================================
+// Responsive Design
+// =====================================
+@media (min-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .result-value {
+    font-size: 2.2rem;
+  }
+
+  .number-value {
+    font-size: 2.5rem;
+  }
+}
+
+// タッチデバイス最適化
+@media (hover: none) and (pointer: coarse) {
+  .tab-btn,
+  .input-select-btn,
+  .number-btn,
+  .action-btn,
+  .btn {
+    min-height: 44px; // Appleのヒューマンインターフェースガイドライン推奨
+  }
+}

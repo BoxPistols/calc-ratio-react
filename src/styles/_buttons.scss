@@ -1,0 +1,103 @@
+// =====================================
+// Button Styles
+// =====================================
+.btn {
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-md);
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+
+    &:active {
+      background: var(--color-primary-dark);
+    }
+  }
+
+  &.btn-secondary {
+    background: var(--color-border);
+    color: var(--color-text);
+
+    &:active {
+      background: var(--color-border-dark);
+    }
+  }
+
+  &.btn-save {
+    background: linear-gradient(135deg, var(--color-success), var(--color-success-dark));
+    color: white;
+
+    &:active {
+      background: var(--color-success-dark);
+    }
+  }
+
+  &.btn-primary-sm,
+  &.btn-danger-sm {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.85rem;
+    border-radius: var(--border-radius-md);
+  }
+
+  &.btn-primary-sm {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+  }
+
+  &.btn-danger-sm {
+    background: linear-gradient(135deg, var(--color-danger), var(--color-danger-dark));
+    color: white;
+  }
+
+  &.btn-load {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    color: white;
+  }
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+
+  &.btn-delete {
+    color: var(--color-danger);
+
+    &:active {
+      background: rgba(244, 67, 54, 0.1);
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
