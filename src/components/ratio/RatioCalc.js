@@ -118,24 +118,28 @@ export const RatioCalc = () => {
       {/* タブナビゲーション */}
       <div className="tab-navigation">
         <button
+          type="button"
           className={`tab-btn ${activeTab === "calc" ? "active" : ""}`}
           onClick={() => setActiveTab("calc")}
         >
           計算
         </button>
         <button
+          type="button"
           className={`tab-btn ${activeTab === "history" ? "active" : ""}`}
           onClick={() => setActiveTab("history")}
         >
           履歴
         </button>
         <button
+          type="button"
           className={`tab-btn ${activeTab === "presets" ? "active" : ""}`}
           onClick={() => setActiveTab("presets")}
         >
           プリセット
         </button>
         <button
+          type="button"
           className={`tab-btn ${activeTab === "memos" ? "active" : ""}`}
           onClick={() => setActiveTab("memos")}
         >
@@ -169,18 +173,21 @@ export const RatioCalc = () => {
           {/* 入力エリア選択ボタン */}
           <div className="input-selector">
             <button
+              type="button"
               className={`input-select-btn ${activeInput === "total" ? "active" : ""}`}
               onClick={() => setActiveInput("total")}
             >
               全体の重さ: <strong>{totalWeight}g</strong>
             </button>
             <button
+              type="button"
               className={`input-select-btn ${activeInput === "ratio1" ? "active" : ""}`}
               onClick={() => setActiveInput("ratio1")}
             >
               比率1: <strong>{ratio1}</strong>
             </button>
             <button
+              type="button"
               className={`input-select-btn ${activeInput === "ratio2" ? "active" : ""}`}
               onClick={() => setActiveInput("ratio2")}
             >
@@ -220,10 +227,11 @@ export const RatioCalc = () => {
 
           {/* アクションボタン */}
           <div className="action-buttons">
-            <button className="btn btn-primary" onClick={saveToHistory}>
+            <button type="button" className="btn btn-primary" onClick={saveToHistory}>
               履歴に保存
             </button>
             <button
+              type="button"
               className="btn btn-secondary"
               onClick={() => {
                 setTotalWeight("0")
@@ -244,7 +252,7 @@ export const RatioCalc = () => {
               value={presetName}
               onChange={(e) => setPresetName(e.target.value)}
             />
-            <button className="btn btn-save" onClick={handleSavePreset}>
+            <button type="button" className="btn btn-save" onClick={handleSavePreset}>
               プリセット保存
             </button>
           </div>
@@ -256,7 +264,7 @@ export const RatioCalc = () => {
         <div className="history-panel">
           <div className="panel-header">
             <h2>計算履歴</h2>
-            <button className="btn btn-danger-sm" onClick={clearHistory}>
+            <button type="button" className="btn btn-danger-sm" onClick={clearHistory}>
               全削除
             </button>
           </div>
@@ -271,6 +279,7 @@ export const RatioCalc = () => {
                       {new Date(item.timestamp).toLocaleString("ja-JP")}
                     </span>
                     <button
+                      type="button"
                       className="btn-icon btn-delete"
                       onClick={() => deleteHistory(item.id)}
                     >
@@ -290,6 +299,7 @@ export const RatioCalc = () => {
                     </div>
                   </div>
                   <button
+                    type="button"
                     className="btn btn-load"
                     onClick={() => loadFromHistory(item)}
                   >
@@ -324,12 +334,14 @@ export const RatioCalc = () => {
                   </div>
                   <div className="preset-actions">
                     <button
+                      type="button"
                       className="btn btn-primary-sm"
                       onClick={() => loadPreset(preset)}
                     >
                       使用
                     </button>
                     <button
+                      type="button"
                       className="btn btn-danger-sm"
                       onClick={() => deletePreset(preset.id)}
                     >
@@ -356,7 +368,7 @@ export const RatioCalc = () => {
               value={newMemo}
               onChange={(e) => setNewMemo(e.target.value)}
             />
-            <button className="btn btn-primary" onClick={handleAddMemo}>
+            <button type="button" className="btn btn-primary" onClick={handleAddMemo}>
               メモを追加
             </button>
           </div>
@@ -371,6 +383,7 @@ export const RatioCalc = () => {
                       {new Date(memo.timestamp).toLocaleString("ja-JP")}
                     </span>
                     <button
+                      type="button"
                       className="btn-icon btn-delete"
                       onClick={() => deleteMemo(memo.id)}
                     >
