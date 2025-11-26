@@ -51,6 +51,7 @@ export const NumberPad = ({ value, onChange, label, unit = "g" }) => {
       <div className="number-pad-grid">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
           <button
+            type="button"
             key={num}
             className="number-btn"
             onClick={() => handleNumberClick(num.toString())}
@@ -58,30 +59,33 @@ export const NumberPad = ({ value, onChange, label, unit = "g" }) => {
             {num}
           </button>
         ))}
-        <button className="number-btn number-btn-dot" onClick={handleDot}>
+        <button type="button" className="number-btn number-btn-dot" onClick={handleDot}>
           .
         </button>
         <button
+          type="button"
           className="number-btn"
           onClick={() => handleNumberClick("0")}
         >
           0
         </button>
-        <button className="number-btn number-btn-clear" onClick={handleBackspace}>
+        <button type="button" className="number-btn number-btn-clear" onClick={handleBackspace}>
           ←
         </button>
       </div>
       <div className="number-pad-actions">
-        <button className="action-btn action-btn-clear" onClick={handleClear}>
+        <button type="button" className="action-btn action-btn-clear" onClick={handleClear}>
           クリア
         </button>
         <button
+          type="button"
           className="action-btn action-btn-plus"
           onClick={() => onChange((parseFloat(value) + 1).toString())}
         >
           +1
         </button>
         <button
+          type="button"
           className="action-btn action-btn-minus"
           onClick={() => onChange(Math.max(0, parseFloat(value) - 1).toString())}
         >
