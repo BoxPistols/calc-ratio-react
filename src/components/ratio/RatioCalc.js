@@ -12,7 +12,7 @@ export const RatioCalc = () => {
   const [totalWeight, setTotalWeight] = useState("0")
   const [ratio1, setRatio1] = useState("0")
   const [ratio2, setRatio2] = useState("0")
-  const [activeInput, setActiveInput] = useState(null)
+  const [activeInput, setActiveInput] = useState("total")
   const [activeTab, setActiveTab] = useState("calc")
   const [presetName, setPresetName] = useState("")
   const [newMemo, setNewMemo] = useState("")
