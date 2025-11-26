@@ -6,7 +6,7 @@ import "./style.scss"
 export default function App() {
   return (
     <div>
-      <h1>薬剤比率計算機</h1>
+      <h1>配合比率計算機</h1>
       <RatioCalc />
     </div>
   )

@@ -150,7 +150,7 @@ export const RatioCalc = () => {
       {/* メイン計算画面 */}
       {activeTab === "calc" && (
         <div className="calc-main">
-          <div className="info-banner">水を基準に1ml=1gを前提とする</div>
+          <div className="info-banner">調味料・薬剤・塗料など様々な配合計算に</div>
 
           {/* 計算結果表示エリア */}
           <div className="result-panel">
@@ -160,12 +160,12 @@ export const RatioCalc = () => {
             </div>
             <div className="result-divider">→</div>
             <div className="result-item">
-              <span className="result-label">1剤</span>
+              <span className="result-label">材料A</span>
               <span className="result-value agent1">{result1}g</span>
             </div>
             <div className="result-divider">+</div>
             <div className="result-item">
-              <span className="result-label">2剤</span>
+              <span className="result-label">材料B</span>
               <span className="result-value agent2">{result2}g</span>
             </div>
           </div>
@@ -184,14 +184,14 @@ export const RatioCalc = () => {
               className={`input-select-btn ${activeInput === "ratio1" ? "active" : ""}`}
               onClick={() => setActiveInput("ratio1")}
             >
-              比率1: <strong>{ratio1}</strong>
+              材料A: <strong>{ratio1}</strong>
             </button>
             <button
               type="button"
               className={`input-select-btn ${activeInput === "ratio2" ? "active" : ""}`}
               onClick={() => setActiveInput("ratio2")}
             >
-              比率2: <strong>{ratio2}</strong>
+              材料B: <strong>{ratio2}</strong>
             </button>
           </div>
 
@@ -210,7 +210,7 @@ export const RatioCalc = () => {
                 <NumberPad
                   value={ratio1}
                   onChange={setRatio1}
-                  label="1剤の比率"
+                  label="材料Aの比率"
                   unit=""
                 />
               )}
@@ -218,7 +218,7 @@ export const RatioCalc = () => {
                 <NumberPad
                   value={ratio2}
                   onChange={setRatio2}
-                  label="2剤の比率"
+                  label="材料Bの比率"
                   unit=""
                 />
               )}
@@ -294,8 +294,8 @@ export const RatioCalc = () => {
                       </span>
                     </div>
                     <div className="history-row">
-                      <span className="agent1">1剤: {item.result1}g</span>
-                      <span className="agent2">2剤: {item.result2}g</span>
+                      <span className="agent1">材料A: {item.result1}g</span>
+                      <span className="agent2">材料B: {item.result2}g</span>
                     </div>
                   </div>
                   <button
